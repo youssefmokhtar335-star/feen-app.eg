@@ -1,52 +1,290 @@
-const LS={theme:"feen_theme_prod"};
+const ADMIN_PASSWORD = "123456";
+const STORAGE_KEY = "elite-company-content-v1";
 
-const ICONS = {
-  map: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg>`,
-  plus: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`,
-  search: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>`,
-  pin: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>`,
-  star: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.1 6.5 7.2 1-5.2 5 1.2 7.2L12 18.8 5.7 21.7l1.2-7.2-5.2-5 7.2-1z"/></svg>`,
-  restaurants: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7a3 3 0 003 3h0V2"/><path d="M7 2v10"/><path d="M21 2v20"/><path d="M18 2v7a3 3 0 003 3h0"/></svg>`,
-  cafes: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h13v8a4 4 0 01-4 4H7a4 4 0 01-4-4z"/><path d="M16 10h2a3 3 0 010 6h-2"/><path d="M6 2s1 1 1 3"/><path d="M10 2s1 1 1 3"/><path d="M14 2s1 1 1 3"/></svg>`,
-  gyms: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7v10"/><path d="M18 7v10"/><path d="M4 9v6"/><path d="M20 9v6"/><path d="M6 12h12"/></svg>`,
-  clinics: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 7h18v14H3z"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>`,
-  shops: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l1-4h16l1 4"/><path d="M4 7a2 2 0 104 0"/><path d="M8 7a2 2 0 104 0"/><path d="M12 7a2 2 0 104 0"/><path d="M16 7a2 2 0 104 0"/><path d="M5 7v14h14V7"/></svg>`,
-  all: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h6v6H4z"/><path d="M14 7h6v6h-6z"/><path d="M4 17h6v6H4z" transform="translate(0 - -0)"/><path d="M14 17h6v6h-6z" transform="translate(0 - -0)"/></svg>`
+const i18n = {
+  ar: {
+    brand: "شركة النخبة",
+    "nav.home": "الرئيسية",
+    "nav.about": "من نحن",
+    "nav.services": "الخدمات",
+    "nav.contact": "تواصل معنا",
+    "nav.admin": "لوحة التحكم",
+    "hero.eyebrow": "حلول أعمال حديثة",
+    "hero.title": "نصنع حضورًا رقميًا قويًا لشركتك",
+    "hero.text": "نساعدك في بناء الهوية، تطوير الحلول، وتسويق خدماتك بشكل عصري وشفاف.",
+    "hero.cta1": "اكتشف خدماتنا",
+    "hero.cta2": "ابدأ مشروعك",
+    "about.title": "من نحن",
+    "services.title": "الخدمات",
+    "contact.title": "تواصل معنا",
+    "contact.phone": "الهاتف:",
+    "contact.email": "البريد:",
+    "contact.address": "العنوان:",
+    "form.name": "الاسم",
+    "form.email": "البريد الإلكتروني",
+    "form.message": "رسالتك",
+    "form.send": "إرسال",
+    "admin.title": "لوحة التحكم",
+    "admin.note": "عدّل المحتوى ثم اضغط حفظ. التغييرات تُحفظ محليًا على نفس المتصفح.",
+    "admin.password": "كلمة المرور",
+    "admin.unlock": "فتح اللوحة",
+    "admin.aboutLabel": "نبذة الشركة",
+    "admin.phoneLabel": "الهاتف",
+    "admin.emailLabel": "البريد",
+    "admin.addressLabel": "العنوان",
+    "admin.servicesLabel": "الخدمات (كل خدمة في سطر)",
+    "admin.save": "حفظ التعديلات",
+    "auth.notSignedIn": "غير مسجّل",
+    "auth.googleSignIn": "تسجيل عبر Google",
+    "auth.signOut": "تسجيل خروج",
+    "auth.configMissing": "Google Auth غير مفعّل (راجع إعدادات Supabase)",
+    footer: "© {{year}} شركة النخبة - جميع الحقوق محفوظة",
+    sent: "تم إرسال رسالتك بنجاح ✅",
+    badPass: "كلمة المرور غير صحيحة",
+    saved: "تم حفظ التعديلات بنجاح"
+  },
+  en: {
+    brand: "Elite Company",
+    "nav.home": "Home",
+    "nav.about": "About",
+    "nav.services": "Services",
+    "nav.contact": "Contact",
+    "nav.admin": "Admin",
+    "hero.eyebrow": "Modern Business Solutions",
+    "hero.title": "We build a powerful digital presence for your company",
+    "hero.text": "We help you build your brand, develop solutions, and market your services with a modern transparent style.",
+    "hero.cta1": "Explore Services",
+    "hero.cta2": "Start Your Project",
+    "about.title": "About Us",
+    "services.title": "Services",
+    "contact.title": "Contact Us",
+    "contact.phone": "Phone:",
+    "contact.email": "Email:",
+    "contact.address": "Address:",
+    "form.name": "Name",
+    "form.email": "Email",
+    "form.message": "Your message",
+    "form.send": "Send",
+    "admin.title": "Admin Panel",
+    "admin.note": "Edit the content then click save. Changes are stored locally in this browser.",
+    "admin.password": "Password",
+    "admin.unlock": "Unlock",
+    "admin.aboutLabel": "Company summary",
+    "admin.phoneLabel": "Phone",
+    "admin.emailLabel": "Email",
+    "admin.addressLabel": "Address",
+    "admin.servicesLabel": "Services (one per line)",
+    "admin.save": "Save Changes",
+    "auth.notSignedIn": "Not signed in",
+    "auth.googleSignIn": "Sign in with Google",
+    "auth.signOut": "Sign out",
+    "auth.configMissing": "Google Auth is not configured (check Supabase settings)",
+    footer: "© {{year}} Elite Company - All rights reserved",
+    sent: "Your message has been sent ✅",
+    badPass: "Incorrect password",
+    saved: "Changes saved successfully"
+  }
 };
-const CATEGORIES=[
-  {key:"restaurants",label:"Restaurants",icon:ICONS.restaurants},
-  {key:"cafes",label:"Cafés",icon:ICONS.cafes},
-  {key:"gyms",label:"Gyms",icon:ICONS.gyms},
-  {key:"clinics",label:"Clinics",icon:ICONS.clinics},
-  {key:"shops",label:"Shops",icon:ICONS.shops},
-  {key:"all",label:"All",icon:ICONS.all}
-];
-function $(s){return document.querySelector(s)}function $all(s){return Array.from(document.querySelectorAll(s))}
-function loadTheme(){const t=localStorage.getItem(LS.theme)||"light";document.documentElement.setAttribute("data-theme",t)}
-function toggleTheme(){const c=document.documentElement.getAttribute("data-theme")||"light";const n=c==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);localStorage.setItem(LS.theme,n)}
-function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-function toast(msg){let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t)}t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
-function nav(page,params={}){const q=new URLSearchParams(params).toString();location.hash=q?`#${page}?${q}`:`#${page}`}
-function parseRoute(){const h=(location.hash||"#home").slice(1);const [p,q]=h.split("?");return{page:p||"home",params:Object.fromEntries(new URLSearchParams(q||""))}}
-function supabaseClient(){const url=window.FEEN_SUPABASE_URL;const key=window.FEEN_SUPABASE_ANON_KEY;if(!url||!key||url.includes("PASTE_")||key.includes("PASTE_"))return null;return window.supabase.createClient(url,key)}
-const sb=supabaseClient();
-async function requireConfigOrShow(){if(sb)return true;const el=document.getElementById("app");el.innerHTML=`<section class="glass page panel"><div class="sectionTitle" style="margin-top:0"><h2>Setup needed</h2><div class="small">Paste Supabase keys</div></div><div class="notice">This build is ready, but needs your Supabase Project URL + anon key.</div><div class="hr"></div><div class="authHint">Open <b>config.js</b> and replace:</div><pre class="code">window.FEEN_SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";\nwindow.FEEN_SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";</pre><div class="hr"></div><div class="authHint">Then redeploy on Netlify. After that, sign in and everything will be online.</div></section>`;return false}
-async function getSession(){if(!sb)return null;const{data}=await sb.auth.getSession();return data.session}
-async function getUser(){const s=await getSession();return s?.user||null}
-async function getProfile(){const u=await getUser();if(!u)return null;const{data,error}=await sb.from("profiles").select("*").eq("id",u.id).maybeSingle();if(error)return null;return data}
-async function ensureProfile(role){const u=await getUser();if(!u)return null;const{data:ex}=await sb.from("profiles").select("*").eq("id",u.id).maybeSingle();if(ex)return ex;const name=u.user_metadata?.full_name||u.email?.split("@")[0]||"User";const{data,error}=await sb.from("profiles").insert({id:u.id,name,role}).select("*").single();if(error){toast("Profile error");return null}return data}
-async function renderUserPill(){const pill=document.getElementById("userPill");if(!sb){pill.innerHTML=`<span class="muted">Config missing</span>`;return}const u=await getUser();if(!u){pill.innerHTML=`<span class="muted">Guest</span><button class="pillBtn" data-nav="auth">Sign in</button>`;pill.querySelector("[data-nav='auth']").addEventListener("click",()=>nav("auth"));return}const p=await getProfile();const role=p?.role==="owner"?"Owner":"User";pill.innerHTML=`<span id="userLabel">${escapeHtml(p?.name||u.email)} • ${role}</span><button class="pillBtn secondary" id="logoutBtn">Logout</button>`;pill.querySelector("#logoutBtn").addEventListener("click",async()=>{await sb.auth.signOut();toast("Signed out");renderUserPill();nav("home")})}
-async function fetchPlaces({q="",cat="all"}={}){if(!sb)return[];let query=sb.from("places").select("*, reviews:reviews(id,stars,created_at)").order("created_at",{ascending:false});if(cat!=="all")query=query.eq("category",cat);if(q)query=query.or(`name.ilike.%${q}%,address.ilike.%${q}%`);const{data,error}=await query;if(error)return[];return (data||[]).map(p=>{const rs=p.reviews||[];const avg=rs.length?(rs.reduce((a,r)=>a+(r.stars||0),0)/rs.length):0;return{...p,_avg:Math.round(avg*10)/10,_reviewsCount:rs.length}}).sort((a,b)=>(b._avg||0)-(a._avg||0))}
-function starsText(st){const s=Math.max(0,Math.min(5,st||0));return"★".repeat(s)+"☆".repeat(5-s)}
-function appEl(){return document.getElementById("app")}
-async function renderHome(){if(!(await requireConfigOrShow()))return;const el=appEl();el.innerHTML=`<section class="glass hero"><div class="heroLeft"><h1>Feen</h1><p>Production build with online database + login.</p><div class="heroSearch glass"><div class="heroSearchRow"><input id="searchInput" placeholder="Search places…" /><button class="btn" id="openMapBtn"><span>${ICONS.map}</span><span>Map</span></button><button class="btn secondary" id="addBtn"><span>＋</span><span>Add</span></button></div><div class="small">Data is shared across devices once Supabase is configured.</div></div></div><div class="heroRight"><div class="glass mapTeaser"><div class="mapTeaserTop"><div><div class="mapTeaserTitle">Map</div><div class="small">Open live map & pins</div></div><span class="chip kpiMini" id="placesCount">…</span></div><div class="mapTeaserBox" aria-hidden="true"><div class="mapTeaserHint">Interactive map with pins</div></div><button class="btn" id="openMapBtn2">Open map</button></div><div class="glass kpis"><div class="kpiGrid"><div class="kpi"><div class="v" id="kPlaces">—</div><div class="l">Places</div></div><div class="kpi"><div class="v" id="kReviews">—</div><div class="l">Reviews</div></div><div class="kpi"><div class="v" id="kOwners">—</div><div class="l">Owners</div></div></div></div></div></section><div class="sectionTitle"><h2>Categories</h2><div class="small">Tap to filter</div></div><section class="row" id="catRow">${CATEGORIES.map(c=>`<button class="chip" data-cat="${c.key}"><span class="icon">${c.icon}</span><span>${c.label}</span></button>`).join("")}<button class="chip" data-cat="all">✨ All</button></section><div class="sectionTitle"><h2>Top places</h2><div class="small" id="countLbl">…</div></div><section class="grid" id="placesGrid"></section>`;$("#openMapBtn").addEventListener("click",()=>nav("map"));$("#openMapBtn2").addEventListener("click",()=>nav("map"));$("#addBtn").addEventListener("click",()=>nav("add"));const search=$("#searchInput");const grid=$("#placesGrid");const countLbl=$("#countLbl");let cat="all";$all("#catRow [data-cat]").forEach(b=>b.addEventListener("click",()=>{cat=b.getAttribute("data-cat");run()}));async function run(){const q=(search.value||"").trim();const places=await fetchPlaces({q,cat});countLbl.textContent=`${places.length} shown`;$("#placesCount").textContent=`${places.length} places`;$("#kPlaces").textContent=`${places.length}`;$("#kReviews").textContent=`${places.reduce((a,p)=>a+(p._reviewsCount||0),0)}`;const {count:ownersCount}=await sb.from("profiles").select("*",{count:"exact",head:true}).eq("role","owner");$("#kOwners").textContent=ownersCount??"—";grid.innerHTML=places.map(p=>`<div class="placeCard" data-id="${p.id}"><div class="placeTop"><div><div class="placeName">${(CATEGORIES.find(c=>c.key===p.category)?.icon||"${ICONS.pin}")} ${escapeHtml(p.name)}</div><div class="placeMeta">${escapeHtml(p.category)} • ${escapeHtml(p.address||"")}</div></div><span class="badge ${p.verified?'':'unverified'}">${p.verified?'Verified':'New'}</span></div><div class="ratingRow"><div class="stars">${starsText(Math.round(p._avg||0))}</div><div class="rating">${p._avg?p._avg.toFixed(1):"—"}</div></div><div class="cardActions"><button class="btn secondary" data-open="view">View</button><button class="btn" data-open="review">Review</button></div></div>`).join("")||`<div class="glass panel page">No places yet. Add the first one</div>`;$all(".placeCard").forEach(card=>{const id=card.getAttribute("data-id");card.addEventListener("click",(e)=>{const btn=e.target?.getAttribute?.("data-open");if(btn==="review")nav("place",{id,tab:"review"});else nav("place",{id})})})}search.addEventListener("input",()=>run());await run()}
-async function renderAuth(){if(!(await requireConfigOrShow()))return;const el=appEl();const u=await getUser();if(u){const p=await getProfile();el.innerHTML=`<section class="glass page panel"><div class="sectionTitle" style="margin-top:0"><h2>Your account</h2><div class="small">Signed in</div></div><div class="hr"></div><div><b>Email:</b> ${escapeHtml(u.email||"")}</div><div><b>Name:</b> ${escapeHtml(p?.name||"")}</div><div><b>Role:</b> ${escapeHtml(p?.role||"user")}</div><div class="hr"></div><button class="btn danger" id="logout">Logout</button></section>`;$("#logout").addEventListener("click",async()=>{await sb.auth.signOut();toast("Signed out");renderUserPill();nav("home")});return}el.innerHTML=`<section class="glass page panel"><div class="sectionTitle" style="margin-top:0"><h2>Sign in</h2><div class="small">Email + password</div></div><div class="twoCol"><div class="glass panel"><div class="form"><div class="field full"><div class="label">Email</div><input class="input" id="email" placeholder="name@email.com" /></div><div class="field full"><div class="label">Password</div><input class="input" id="pass" type="password" placeholder="••••••••" /></div><div class="field full"><div class="label">Role</div><select class="select" id="role"><option value="user">User</option><option value="owner">Owner</option></select></div><div class="field full"><button class="btn" id="signup">Create account</button><button class="btn secondary" id="signin">Sign in</button></div><div class="field full authHint">If email confirmation is enabled, Supabase will ask you to confirm.</div></div></div><div class="glass panel"><h3 style="margin:0 0 10px">What you get</h3><div class="authHint">• Online places + reviews<br/>• Roles: User / Owner<br/>• Works on Netlify</div></div></div></section>`;$("#signup").addEventListener("click",async()=>{const email=$("#email").value.trim();const password=$("#pass").value;const role=$("#role").value;if(!email||!password){toast("Enter email + password");return}const{error}=await sb.auth.signUp({email,password});if(error){toast(error.message);return}toast("Account created");const session=(await sb.auth.getSession()).data.session;if(session){await ensureProfile(role);renderUserPill();nav("home")}else{toast("Check your email to confirm, then sign in.")}});$("#signin").addEventListener("click",async()=>{const email=$("#email").value.trim();const password=$("#pass").value;const role=$("#role").value;if(!email||!password){toast("Enter email + password");return}const{error}=await sb.auth.signInWithPassword({email,password});if(error){toast(error.message);return}await ensureProfile(role);toast("Signed in");renderUserPill();nav("home")})}
-let addMap=null,addMarker=null;
-async function renderAdd(){if(!(await requireConfigOrShow()))return;const el=appEl();const u=await getUser();if(!u){el.innerHTML=`<section class="glass page panel"><div class="notice"><b>Sign in required</b> to add places.</div><div class="hr"></div><button class="btn" id="go">Sign in</button></section>`;$("#go").addEventListener("click",()=>nav("auth"));return}el.innerHTML=`<section class="glass page panel"><div class="sectionTitle" style="margin-top:0"><h2>Add a place</h2><div class="small">Click map to set location</div></div><div class="twoCol"><div class="glass panel"><div class="form"><div class="field full"><div class="label">Place name</div><input class="input" id="pName" placeholder="e.g. Feen Café" /></div><div class="field"><div class="label">Category</div><select class="select" id="pCat">${CATEGORIES.map(c=>`<option value="${c.key}">${c.label}</option>`).join("")}</select></div><div class="field"><div class="label">Phone</div><input class="input" id="pPhone" placeholder="+20 ..." /></div><div class="field full"><div class="label">Address</div><input class="input" id="pAddr" placeholder="Area / street" /></div><div class="field full"><div class="label">Description</div><textarea class="textarea" id="pDesc" placeholder="Short description"></textarea></div><div class="field"><div class="label">Latitude</div><input class="input" id="pLat" readonly placeholder="Click map" /></div><div class="field"><div class="label">Longitude</div><input class="input" id="pLng" readonly placeholder="Click map" /></div><div class="field full"><button class="btn" id="savePlace">Save</button><button class="btn secondary" id="cancel">Cancel</button></div></div></div><div class="glass panel"><div id="mapAdd"></div><div class="authHint" style="margin-top:10px">Tap the map to drop a pin.</div></div></div></section>`;$("#cancel").addEventListener("click",()=>nav("home"));initAddMap();$("#savePlace").addEventListener("click",async()=>{const name=$("#pName").value.trim();const category=$("#pCat").value;const phone=$("#pPhone").value.trim();const address=$("#pAddr").value.trim();const description=$("#pDesc").value.trim();const lat=parseFloat($("#pLat").value);const lng=parseFloat($("#pLng").value);if(!name){toast("Place name required");return}if(!Number.isFinite(lat)||!Number.isFinite(lng)){toast("Click map to set location");return}const profile=await getProfile();const isOwner=profile?.role==="owner";const{data,error}=await sb.from("places").insert({name,category,phone,address,description,lat,lng,owner_id:u.id,verified:isOwner?true:false}).select("*").single();if(error){toast(error.message);return}toast("Place saved");nav("place",{id:data.id})})}
-function initAddMap(){const mapEl=$("#mapAdd");if(!mapEl)return;if(addMap){addMap.remove();addMap=null;addMarker=null}const start={lat:31.2001,lng:29.9187};addMap=L.map("mapAdd").setView([start.lat,start.lng],12);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(addMap);addMap.on("click",(e)=>{const{lat,lng}=e.latlng;$("#pLat").value=lat.toFixed(6);$("#pLng").value=lng.toFixed(6);if(!addMarker)addMarker=L.marker([lat,lng]).addTo(addMap);else addMarker.setLatLng([lat,lng])})}
-let viewMap=null;
-async function renderMap(){if(!(await requireConfigOrShow()))return;const el=appEl();el.innerHTML=`<section class="glass page panel"><div class="sectionTitle" style="margin-top:0"><h2>Map</h2><div class="small">Tap pins to open places</div></div><div id="mapView"></div><div class="hr"></div><button class="btn secondary" id="back">Back</button></section>`;$("#back").addEventListener("click",()=>nav("home"));const places=await fetchPlaces({q:"",cat:"all"});if(viewMap){viewMap.remove();viewMap=null}const start=places[0]?{lat:places[0].lat,lng:places[0].lng}:{lat:31.2001,lng:29.9187};viewMap=L.map("mapView").setView([start.lat,start.lng],12);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(viewMap);places.forEach(p=>{const pin=L.marker([p.lat,p.lng]).addTo(viewMap);const r=p._avg||0;pin.bindPopup(`<b>${escapeHtml(p.name)}</b><br/>${r?`${ICONS.star} ${r.toFixed(1)}`:"No reviews"}<br/><a href="#place?id=${encodeURIComponent(p.id)}">Open</a>`)})}
-async function renderPlace(id,tab="info"){if(!(await requireConfigOrShow()))return;const el=appEl();const{data:place,error}=await sb.from("places").select("*").eq("id",id).maybeSingle();if(error||!place){el.innerHTML=`<section class="glass page panel">Place not found.</section>`;return}const{data:reviews}=await sb.from("reviews").select("*").eq("place_id",id).order("created_at",{ascending:false});const rs=reviews||[];const avg=rs.length?rs.reduce((a,r)=>a+(r.stars||0),0)/rs.length:0;const r=rs.length?Math.round(avg*10)/10:0;const u=await getUser();const profile=await getProfile();const isOwner=profile?.role==="owner";const canManage=isOwner&&u?.id===place.owner_id;const wa=(place.phone||"").replace(/\s+/g,"").replace(/^\+/,"");const waLink=wa?`https://wa.me/${wa}`:"#";el.innerHTML=`<section class="glass page panel"><div class="sectionTitle" style="margin-top:0"><h2>${escapeHtml(place.name)}</h2><div class="small">${escapeHtml(place.category)} • ${escapeHtml(place.address||"")}</div></div><div class="row" style="align-items:center; justify-content:space-between"><div class="row" style="gap:10px"><span class="badge ${place.verified?'':'unverified'}">${place.verified?'Verified':'New'}</span><span class="chip">${r?`${ICONS.star} ${r.toFixed(1)} / 5`:"No reviews"}</span><span class="chip">${rs.length} reviews</span></div><div class="row"><button class="btn secondary" id="backBtn">Back</button><button class="btn" id="openMap">Map</button></div></div><div class="hr"></div><div class="row" style="gap:10px; margin-bottom:10px"><button class="chip" data-tab="info">Info</button><button class="chip" data-tab="review">Write review</button><button class="chip" data-tab="reviews">Reviews</button>${canManage?`<button class="chip" data-tab="manage">Manage</button>`:""}</div><div id="tabContent"></div></section>`;$("#backBtn").addEventListener("click",()=>nav("home"));$("#openMap").addEventListener("click",()=>nav("map"));$all("[data-tab]").forEach(b=>b.addEventListener("click",()=>renderTab(b.getAttribute("data-tab"))));function renderTab(which){const tc=$("#tabContent");if(which==="review"){if(!u){tc.innerHTML=`<div class="notice"><b>Sign in</b> to write a review.</div>`;return}tc.innerHTML=`<div class="glass panel"><div class="form"><div class="field full"><div class="label">Stars</div><select class="select" id="stars"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option><option value="2">★★☆☆☆ (2)</option><option value="1">★☆☆☆☆ (1)</option></select></div><div class="field full"><div class="label">Review</div><textarea class="textarea" id="text" placeholder="Short & honest"></textarea></div><div class="field full"><button class="btn" id="post">Post</button></div></div></div>`;$("#post").addEventListener("click",async()=>{const stars=parseInt($("#stars").value,10);const text=$("#text").value.trim();if(!text){toast("Write a short review");return}const{error}=await sb.from("reviews").insert({place_id:id,user_id:u.id,stars,text});if(error){toast(error.message);return}toast("Review added");renderPlace(id,"reviews")});return}if(which==="reviews"){tc.innerHTML=`<div class="glass panel"><div style="display:flex; flex-direction:column; gap:10px">${rs.map(rv=>`<div class="glass panel" style="padding:12px"><div class="row" style="justify-content:space-between; align-items:center"><div style="font-weight:900">${starsText(rv.stars)} <span class="small">(${rv.stars})</span></div><div class="small">${new Date(rv.created_at).toLocaleDateString()}</div></div><div style="margin-top:8px; line-height:1.7">${escapeHtml(rv.text)}</div></div>`).join("")||`<div class="small">No reviews yet.</div>`}</div></div>`;return}if(which==="manage"){if(!canManage){tc.innerHTML=`<div class="notice">No access.</div>`;return}tc.innerHTML=`<div class="glass panel"><div class="form"><div class="field full"><div class="label">Phone</div><input class="input" id="mPhone" value="${escapeHtml(place.phone||"")}" /></div><div class="field full"><div class="label">Description</div><textarea class="textarea" id="mDesc">${escapeHtml(place.description||"")}</textarea></div><div class="field full"><div class="label">Verified</div><select class="select" id="mVer"><option value="true" ${place.verified?'selected':''}>Yes</option><option value="false" ${!place.verified?'selected':''}>No</option></select></div><div class="field full"><button class="btn" id="save">Save</button><button class="btn danger" id="del">Delete</button></div></div></div>`;$("#save").addEventListener("click",async()=>{const phone=$("#mPhone").value.trim();const description=$("#mDesc").value.trim();const verified=$("#mVer").value==="true";const{error}=await sb.from("places").update({phone,description,verified}).eq("id",id);if(error){toast(error.message);return}toast("Saved");renderPlace(id,"info")});$("#del").addEventListener("click",async()=>{if(!confirm("Delete place?"))return;const{error}=await sb.from("places").delete().eq("id",id);if(error){toast(error.message);return}toast("Deleted");nav("home")});return}tc.innerHTML=`<div class="twoCol"><div class="glass panel"><div class="small" style="line-height:1.9"><div><b>Category:</b> ${escapeHtml(place.category)}</div><div><b>Address:</b> ${escapeHtml(place.address||"—")}</div></div><div class="hr"></div><div class="small" style="line-height:1.9">${escapeHtml(place.description||"")}</div><div class="hr"></div><div class="row" style="gap:10px"><a class="btn" href="tel:${escapeHtml(place.phone||"")}" ${place.phone?'':'style="pointer-events:none;opacity:.5"'}>📞 Call</a><a class="btn secondary" target="_blank" href="${waLink}" ${place.phone?'':'style="pointer-events:none;opacity:.5"'}>💬 WhatsApp</a></div></div><div class="glass panel"><div id="miniMap" style="height:260px;border-radius:22px;overflow:hidden;border:1px solid var(--stroke)"></div></div></div>`;setTimeout(()=>initMiniMap(place),20)}renderTab(tab)}
-function initMiniMap(place){const el=$("#miniMap");if(!el)return;const clone=el.cloneNode(false);el.parentNode.replaceChild(clone,el);const m=L.map(clone,{zoomControl:false,scrollWheelZoom:false}).setView([place.lat,place.lng],15);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(m);L.marker([place.lat,place.lng]).addTo(m)}
-async function route(){const y=$("#year");if(y)y.textContent=String(new Date().getFullYear());$all("[data-nav]").forEach(a=>a.addEventListener("click",(e)=>{e.preventDefault();nav(a.getAttribute("data-nav"))}));await renderUserPill();const {page,params}=parseRoute();if(page==="auth")return renderAuth();if(page==="add")return renderAdd();if(page==="map")return renderMap();if(page==="place")return renderPlace(params.id,params.tab||"info");return renderHome()}
-loadTheme();document.getElementById("themeBtn").addEventListener("click",toggleTheme);window.addEventListener("hashchange",()=>route());window.addEventListener("load",()=>route());
+
+const defaultContent = {
+  aboutText: "نحن شركة متخصصة في الحلول الرقمية، نؤمن أن الجمع بين الإبداع والتقنية هو الطريق الأسرع لنمو الأعمال.",
+  phone: "+20 100 000 0000",
+  email: "hello@elite-company.com",
+  address: "القاهرة، مصر",
+  services: [
+    "تصميم وتطوير المواقع",
+    "الهوية البصرية والعلامة التجارية",
+    "التسويق الرقمي وإدارة الحملات",
+    "الاستشارات التقنية للشركات"
+  ]
+};
+
+let lang = localStorage.getItem("site-lang") || "ar";
+let content = loadContent();
+let supabaseClient = null;
+let currentUser = null;
+
+function loadContent() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return parsed ? { ...defaultContent, ...parsed } : { ...defaultContent };
+  } catch {
+    return { ...defaultContent };
+  }
+}
+
+function saveContent(nextContent) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(nextContent));
+}
+
+function t(key) {
+  return i18n[lang][key] || key;
+}
+
+function renderTexts() {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    const key = node.getAttribute("data-i18n");
+    node.textContent = t(key).replace("{{year}}", new Date().getFullYear());
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+    const key = node.getAttribute("data-i18n-placeholder");
+    node.setAttribute("placeholder", t(key));
+  });
+
+  document.getElementById("langToggle").textContent = lang === "ar" ? "EN" : "AR";
+  updateAuthUi();
+}
+
+function renderContent() {
+  document.querySelector('[data-content="aboutText"]').textContent = content.aboutText;
+  document.querySelector('[data-content="phone"]').textContent = content.phone;
+  document.querySelector('[data-content="email"]').textContent = content.email;
+  document.querySelector('[data-content="address"]').textContent = content.address;
+
+  const servicesList = document.getElementById("servicesList");
+  servicesList.innerHTML = "";
+  content.services.forEach((service) => {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.textContent = service;
+    servicesList.appendChild(card);
+  });
+}
+
+function initAdmin() {
+  const adminAuth = document.getElementById("adminAuth");
+  const unlockBtn = document.getElementById("unlockAdmin");
+  const adminForm = document.getElementById("adminForm");
+
+  unlockBtn.addEventListener("click", () => {
+    const pass = document.getElementById("adminPassword").value;
+    if (pass !== ADMIN_PASSWORD) {
+      alert(t("badPass"));
+      return;
+    }
+
+    adminAuth.classList.add("hidden");
+    adminForm.classList.remove("hidden");
+
+    adminForm.aboutText.value = content.aboutText;
+    adminForm.phone.value = content.phone;
+    adminForm.email.value = content.email;
+    adminForm.address.value = content.address;
+    adminForm.services.value = content.services.join("\n");
+  });
+
+  adminForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    content = {
+      aboutText: adminForm.aboutText.value.trim(),
+      phone: adminForm.phone.value.trim(),
+      email: adminForm.email.value.trim(),
+      address: adminForm.address.value.trim(),
+      services: adminForm.services.value.split("\n").map((item) => item.trim()).filter(Boolean)
+    };
+    saveContent(content);
+    renderContent();
+    alert(t("saved"));
+  });
+}
+
+function initContactForm() {
+  const form = document.getElementById("contactForm");
+  const result = document.getElementById("formResult");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    form.reset();
+    result.textContent = t("sent");
+  });
+}
+
+function initLangSwitch() {
+  document.getElementById("langToggle").addEventListener("click", () => {
+    lang = lang === "ar" ? "en" : "ar";
+    localStorage.setItem("site-lang", lang);
+    renderTexts();
+  });
+}
+
+function initYear() {
+  const yearNode = document.getElementById("year");
+  yearNode.textContent = new Date().getFullYear();
+}
+
+function initSupabaseClient() {
+  const url = window.FEEN_SUPABASE_URL;
+  const key = window.FEEN_SUPABASE_ANON_KEY;
+  if (!window.supabase || !url || !key) return null;
+  return window.supabase.createClient(url, key);
+}
+
+function updateAuthUi() {
+  const authStatus = document.getElementById("authStatus");
+  const authBtn = document.getElementById("googleAuthBtn");
+  if (!authStatus || !authBtn) return;
+
+  if (!supabaseClient) {
+    authStatus.textContent = t("auth.configMissing");
+    authBtn.disabled = true;
+    authBtn.classList.add("btn-soft");
+    return;
+  }
+
+  authBtn.disabled = false;
+  if (currentUser) {
+    authStatus.textContent = currentUser.email || currentUser.user_metadata?.full_name || t("auth.notSignedIn");
+    authBtn.textContent = t("auth.signOut");
+    authBtn.classList.add("btn-danger");
+    authBtn.classList.remove("btn-soft");
+  } else {
+    authStatus.textContent = t("auth.notSignedIn");
+    authBtn.textContent = t("auth.googleSignIn");
+    authBtn.classList.remove("btn-danger");
+    authBtn.classList.add("btn-soft");
+  }
+}
+
+async function initGoogleAuth() {
+  supabaseClient = initSupabaseClient();
+  updateAuthUi();
+
+  const authBtn = document.getElementById("googleAuthBtn");
+  if (!authBtn || !supabaseClient) return;
+
+  const { data } = await supabaseClient.auth.getUser();
+  currentUser = data?.user || null;
+  updateAuthUi();
+
+  authBtn.addEventListener("click", async () => {
+    if (currentUser) {
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      updateAuthUi();
+      return;
+    }
+
+    await supabaseClient.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + window.location.pathname
+      }
+    });
+  });
+
+  supabaseClient.auth.onAuthStateChange((_event, session) => {
+    currentUser = session?.user || null;
+    updateAuthUi();
+  });
+}
+
+initYear();
+renderTexts();
+renderContent();
+initLangSwitch();
+initAdmin();
+initContactForm();
+initGoogleAuth();

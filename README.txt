@@ -1,9 +1,25 @@
-Feen Production (Supabase) - Quick Setup
+Elite Company Website
 
-1) Create Supabase project (free)
-2) SQL Editor: run supabase.sql
-3) Authentication -> Providers: Email ON
-4) Copy Project URL + anon key into config.js
-5) Deploy on Netlify (GitHub recommended)
+Simple modern glass-style company website with:
+- Home
+- About
+- Services
+- Contact
+- Admin panel (local content editor)
+- Arabic/English language toggle
+- Google sign-in (via Supabase OAuth)
 
-Social login (Google/Facebook/Apple) needs OAuth IDs from their consoles.
+How to use:
+1) Open index.html in browser (or run any static server).
+2) Visit "لوحة التحكم / Admin" section.
+3) Enter password: 123456
+4) Edit content and save.
+
+Google login setup:
+1) In Supabase Dashboard > Authentication > Providers, enable Google.
+2) Add your Site URL and Redirect URL in Supabase Auth settings.
+3) Set `FEEN_SUPABASE_URL` and `FEEN_SUPABASE_ANON_KEY` in `config.js`.
+
+Notes:
+- Content is saved in browser localStorage.
+- Change ADMIN_PASSWORD in app.js before production deployment.
