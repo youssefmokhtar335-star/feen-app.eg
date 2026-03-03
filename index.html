@@ -1,53 +1,56 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Feen • Production</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <title>Nexora Auth</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
 </head>
 <body>
-  <div class="bg"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
 
   <header class="topbar glass">
-    <div class="topbarLeft" aria-hidden="true"></div>
-    <a class="brand" href="#home" aria-label="Feen Home">
-      <img class="logoImg" src="assets/logo.svg" alt="Feen" />
-      <div class="brandText">
-        <div class="name">Feen</div>
-        <div class="tag">Discover before you go</div>
-      </div>
-    </a>
-
-    <div class="topbarRight">
-      <button class="iconBtn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-
-      <div class="userPill glass" id="userPill">
-        <span class="muted">Not signed in</span>
-        <button class="pillBtn" data-nav="auth">Sign in</button>
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div>
+        <h1>Nexora</h1>
+        <p>تجربة تسجيل دخول حديثة وآمنة</p>
       </div>
     </div>
+
+    <button id="themeBtn" class="theme-btn" aria-label="تبديل الوضع">
+      <span class="theme-light">☀️</span>
+      <span class="theme-dark">🌙</span>
+    </button>
   </header>
 
-  <main id="app" class="container"></main>
+  <main class="page">
+    <section class="auth-card glass">
+      <div class="chip">تطبيق جديد بالكامل</div>
+      <h2>أهلاً بك 👋</h2>
+      <p class="subtitle">سجّل دخولك باستخدام Google أو Facebook في واجهة زجاجية مودرن.</p>
 
-  <footer class="footer">
-    <span>Feen © <span id="year"></span></span>
-    <span class="dot">•</span>
-    <a class="link" href="#home" data-nav="home">Home</a>
-    <span class="dot">•</span>
-    <a class="link" href="#map" data-nav="map">Map</a>
-    <span class="dot">•</span>
-    <a class="link" href="#add" data-nav="add">Add</a>
-  </footer>
+      <div id="statusBox" class="status">جارِ التحقق من الجلسة...</div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+      <div id="guestActions" class="actions">
+        <button class="social-btn google" id="googleBtn">
+          <span>G</span>
+          متابعة باستخدام Google
+        </button>
+        <button class="social-btn facebook" id="facebookBtn">
+          <span>f</span>
+          متابعة باستخدام Facebook
+        </button>
+      </div>
+
+      <div id="userBox" class="user-box hidden">
+        <p>تم تسجيل الدخول بنجاح ✅</p>
+        <h3 id="userEmail"></h3>
+        <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
+      </div>
+    </section>
+  </main>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
